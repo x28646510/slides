@@ -1,11 +1,54 @@
-import { future } from '@mdx-deck/themes'
+import { dark, highlight } from '@mdx-deck/themes'
 
 export const theme = {
-  ...future,
+  ...dark,
+  ...highlight,
+  styles: {
+    h1: {
+      m: '50px',
+    },
+    ul: {
+      m: '50px',
+    },
+    a: {
+      textDecoration: 'none',
+    },
+  },
 }
 
-# Gatsby + MDX + MDX Deck + Netfliy で手軽にスライドを公開する
+# Gatsby + MDX + MDX Deck + Netlify で手軽にスライドを公開する
 
 ---
 
-## Beep boop
+## Gatsby とは
+
+[公式サイト](https://www.gatsbyjs.org/docs/)
+
+- Static Site Generator (以下 SSG) のツール群
+- [Jamstack](https://jamstack.org/)を支えるソフトウェアの一つ
+
+---
+
+## MDX とは
+
+[公式サイト](https://mdxjs.com/)
+
+- Markdown のシンタックスに JSX を追加したドキュメント
+
+---
+
+## MDX Deck とは
+
+[公式サイト](https://github.com/jxnblk/mdx-deck)
+
+- MDX でプレゼンテーションを作成できるソフトウェア
+
+---
+
+## Netlify とは
+
+[公式サイト](https://docs.netlify.com/)
+
+- ホスティングサービスの一つ
+- 静的なサイトを簡単にビルド、デプロイして公開することが出来る
+- Git レポジトリからインポート出来るのが便利
