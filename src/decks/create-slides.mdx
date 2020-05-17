@@ -1,5 +1,7 @@
 import { dark, highlight } from '@mdx-deck/themes'
 
+import Link from '../components/Link'
+
 export const theme = {
   ...dark,
   ...highlight,
@@ -7,14 +9,24 @@ export const theme = {
     h1: {
       m: '50px',
     },
+    p: {
+      mx: '50px',
+      my: '20px',
+      textAlign: 'left',
+    },
     a: {
       textDecoration: 'none',
     },
     ul: {
+      mx: '50px',
       lineHeight: 1.25,
+    },
+    pre: {
+      mx: '50px',
     },
     code: {
       fontSize: '0.6em',
+      width: '90%',
     },
   },
 }
@@ -23,20 +35,31 @@ export const theme = {
 
 ---
 
+## 使用する技術
+
+- React
+- Gatsby
+- MDX
+- MDX Deck
+- Netlify
+- Theme UI
+
+---
+
 ## Gatsby とは
 
-[公式サイト](https://www.gatsbyjs.org/docs/)
+<Link href="https://www.gatsbyjs.org/docs/">公式サイト</Link>
 
 - Static Site Generator (以下 SSG) のツール群
-- [Jamstack](https://jamstack.org/)を支えるソフトウェアの一つ
+- <Link href="https://jamstack.org/">Jamstack</Link>を支えるソフトウェアの一つ
 
 ---
 
 ## MDX とは
 
-[公式サイト](https://mdxjs.com/)
+<Link href="https://mdxjs.com/">公式サイト</Link>
 
-- Markdown のシンタックスに JSX を追加したドキュメント
+Markdown のシンタックスに JSX を追加したドキュメント
 
 ```mdx
 # Hello, _world_!
@@ -51,21 +74,115 @@ the background color!**
 
 ---
 
+## MDX の何が嬉しいか？
+
+Markdown を拡張する場合に HTML を記述するが、再利用やデザインの変更が面倒。そこで、JSX を追加することで再利用やデザインの変更を容易にする、という認識。
+
+以下のようなことが簡単に拡張できる。
+
+- 複雑なテーブル実装
+- リンクに`target="_blank"`と`rel="noopener"`を指定
+  - 毎回`<a href="" target="_blank" rel="noopener">Link</a>`を書くのは面倒
+
+---
+
+コンポーネントを作成する
+
+```tsx
+// example src/components/Layout.tsx
+import React from 'react'
+
+export default ({ children }) => (
+  <div
+    style={{
+      width: '100vw',
+      height: '100vh',
+      backgroundColor: 'tomato',
+    }}
+  >
+    {children}
+  </div>
+)
+```
+
+---
+
+MDX で使用する
+
+```mdx
+import Layout from '../components/Layout'
+
+# Layout なし
+
+---
+
+<Layout>
+
+# コンポーネントを使用した Layout
+
+</Layout>
+```
+
+---
+
+# Layout なし
+
+---
+
+import Layout from '../components/Layout'
+
+<Layout>
+
+# コンポーネントを使用した Layout
+
+</Layout>
+
+---
+
 ## MDX Deck とは
 
-[公式サイト](https://github.com/jxnblk/mdx-deck)
+<Link href="https://github.com/jxnblk/mdx-deck">公式サイト</Link>
 
 - MDX でプレゼンテーションを作成できるソフトウェア
+- Gatsby のプラグインが用意されているので手軽に使える
+
+---
+
+## MDX Deck の何が嬉しいか？
+
+- Markdown を書くだけでプレゼンテーションを作成できる
+- UI を操作するのではなく、コードで作成できるので**楽しい**
+- 脱パワポ
+
+---
+
+## MDX Deck の気になる点
+
+- デザインの変更にフロントエンドの知識が求められる
+- デザインの微調整が面倒
+- そのままのドキュメントは読みづらい
+- MDX のインポートが出来ない（MDX の再利用が出来ない）
+- コードブロックを柔軟に記述できる<Link href="https://github.com/pomber/code-surfer">Code Surfer</Link>というライブラリがあるが、最新の MDX Deck だとバグがあって使えない
 
 ---
 
 ## Netlify とは
 
-[公式サイト](https://docs.netlify.com/)
+<Link href="https://docs.netlify.com/">公式サイト</Link>
 
 - ホスティングサービスの一つ
 - 静的なサイトを簡単にビルド、デプロイして公開することが出来る
 - Git レポジトリからインポート出来るのが便利
+
+---
+
+## Theme UI とは
+
+<Link href="https://theme-ui.com/">公式サイト</Link>
+
+- React ベースの UI ライブラリ
+- Theme を指定出来たり Material UI に近いかもしれない（あまり使っていないからわからない）
+- Material UI より拡張は簡単そうに感じた
 
 ---
 
@@ -79,6 +196,149 @@ yarn add gatsby-plugin-mdx gatsby-theme-mdx-deck gatsby-plugin-typescript
 yarn add -D typescript
 ```
 
-今回は Gatsby を使用するので、ライブラリを直接追加しない。
+今回は Gatsby を使用するので、MDX と MDX Deck のライブラリを直接追加しない。
+
+---
+
+## Gatsby のルーティングにスライドを追加
+
+```js
+// gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: `Slides`,
+  },
+  plugins: [
+    `gatsby-plugin-mdx`, // MDX をスライド以外でも使う場合
+    `gatsby-plugin-typescript`, // TypeScript を使用する場合
+    {
+      resolve: 'gatsby-theme-mdx-deck',
+      options: {
+        // source directory
+        contentPath: 'src/decks',
+        // base path for routes generate by this theme
+        basePath: '/slides',
+      },
+    },
+  ],
+}
+```
+
+---
+
+## スライドを作成する
+
+```mdx
+# Beep
+
+---
+
+## Boop
+
+---
+
+Bop
+```
+
+---
+
+# Beep
+
+---
+
+## Boop
+
+---
+
+Bop
+
+---
+
+## プレゼンテーションのテーマを変更
+
+<Link href="https://github.com/jxnblk/mdx-deck/tree/master/packages/themes">
+  利用できるテーマ
+</Link>
+
+```ts
+// スライドの最初に定義する
+import { dark, highlight } from '@mdx-deck/themes'
+
+export const theme = {
+  ...dark,
+  ...highlight,
+  // 自分でスタイルを拡張したい場合は、個別に定義できる
+  styles: {
+    h1: {
+      m: '50px',
+    },
+    p: {
+      mx: '50px',
+      my: '20px',
+      textAlign: 'left',
+    },
+    a: {
+      textDecoration: 'none',
+    },
+    ul: {
+      mx: '50px',
+      lineHeight: 1.25,
+    },
+    pre: {
+      mx: '50px',
+    },
+    code: {
+      fontSize: '0.6em',
+      width: '90%',
+    },
+  },
+}
+```
+
+---
+
+## スライド全体のデザインを修正
+
+Gatsby のデフォルトで body に margin が設定されているので、 margin を削除しないと背景が白以外のときは変な空白が表示されてしまう。
+
+```css
+// src/styles/global.css
+body {
+  margin: 0;
+}
+```
+
+```js
+// gatsby-browser.js
+import './src/styles/global.css'
+```
+
+---
+
+## スライドを作成
+
+準備が整ったので、`src/decks`に MDX を作成すればスライドとしてデプロイ可能
+
+---
+
+## スライドを作成時の注意
+
+```mdx
+// エラー
+
+<Link href="" />コンポーネントの前に Markdown で定義されていない要素がある状態でテキストは書けない
+
+// OK
+
+- <Link href="" />コンポーネントの前に Markdown で定義されている要素があるのでテキストがかける
+```
+
+---
+
+## Netlify にデプロイ
+
+<Link href="https://app.netlify.com" />
+
+にアクセスしてデプロイ
 
 ---
