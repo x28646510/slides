@@ -1,10 +1,7 @@
 export default () => (
   <ul>
     <li>
-      <a href="/slides/create-slides">hello</a>
-    </li>
-    <li>
-      <a href="/slides/beep">beep</a>
+      <a href="/slides">スライド</a>
     </li>
   </ul>
 )

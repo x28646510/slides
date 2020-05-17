@@ -7,11 +7,14 @@ export const theme = {
     h1: {
       m: '50px',
     },
-    ul: {
-      m: '50px',
-    },
     a: {
       textDecoration: 'none',
+    },
+    ul: {
+      lineHeight: 1.25,
+    },
+    code: {
+      fontSize: '0.6em',
     },
   },
 }
@@ -35,6 +38,17 @@ export const theme = {
 
 - Markdown のシンタックスに JSX を追加したドキュメント
 
+```mdx
+# Hello, _world_!
+
+Below is an example of JSX embedded in Markdown. <br /> **Try and change
+the background color!**
+
+<div style={{ padding: '20px', backgroundColor: 'tomato' }}>
+  <h3>This is JSX</h3>
+</div>
+```
+
 ---
 
 ## MDX Deck とは
@@ -52,3 +66,19 @@ export const theme = {
 - ホスティングサービスの一つ
 - 静的なサイトを簡単にビルド、デプロイして公開することが出来る
 - Git レポジトリからインポート出来るのが便利
+
+---
+
+## 準備
+
+```bash
+yarn global add gatsby
+gatsby new slides
+cd slides
+yarn add gatsby-plugin-mdx gatsby-theme-mdx-deck gatsby-plugin-typescript
+yarn add -D typescript
+```
+
+今回は Gatsby を使用するので、ライブラリを直接追加しない。
+
+---
